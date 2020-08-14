@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="t0">@dimen/sp_28</dimen>
+    <dimen name="t1">@dimen/sp_18</dimen>
+    <dimen name="t2">@dimen/sp_15</dimen>
+    <dimen name="t3">@dimen/sp_14</dimen>
+    <dimen name="t4">@dimen/sp_12</dimen>
+    <dimen name="t5">@dimen/sp_10</dimen>
+    <dimen name="toolbar_height">@dimen/dp_45</dimen>
+</resources>

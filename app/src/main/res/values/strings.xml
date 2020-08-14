@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">J-Todo</string>
+    <string name="task">任务</string>
+    <string name="tomato_clock">番茄钟</string>
+    <string name="record">记录</string>
+    <string name="my">我的</string>
+    <string name="save">保存</string>
+    <string name="add_task_box">加入任务箱</string>
+    <string name="add_task">添加任务</string>
+    <string name="today">今天</string>
+    <string name="tomorrow">明天</string>
+    <string name="select_date">选择日期</string>
+    <string name="no_date">暂无日期</string>
+    <string name="cancel">取消</string>
+    <string name="sure">确定</string>
+    <string name="add_sub_task">添加子任务</string>
+    <string name="add">添加</string>
+    <string name="prepare_input">准备做什么？</string>
+</resources>

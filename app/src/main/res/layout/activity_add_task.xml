@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.jal.todo.module.addtask.AddTaskViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar_layout"
+            layout="@layout/toolbar_layout"
+            app:viewModel="@{viewModel.toolbarViewModel}" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_color">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_45"
+                    android:background="@color/white"
+                    android:drawableLeft="@drawable/ic_edit_task"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:hint="@string/prepare_input"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_15"
+                    android:singleLine="true"
+                    android:text="@={viewModel.mTaskContent}"
+                    android:textColor="@color/title_color"
+                    android:textColorHint="@color/gray"
+                    android:textSize="@dimen/t2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_15">
+
+                    <RadioGroup
+                        android:id="@+id/date_select_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_45"
+                        android:orientation="horizontal"
+                        app:checkChild="@{viewModel.mSelectTime}"
+                        app:onCheckedChangeCommand="@{viewModel.mCheckedChangeCommand}">
+
+                        <RadioButton
+                            android:id="@+id/today"
+                            style="@style/select_date_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/today" />
+
+                        <RadioButton
+                            android:id="@+id/tomorrow"
+                            style="@style/select_date_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_15"
+                            android:text="@string/tomorrow" />
+
+                        <TextView
+                            android:id="@+id/select_date"
+                            style="@style/select_date_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_15"
+                            android:text="@{viewModel.mDate==null?@string/select_date:viewModel.mDate}"
+                            app:isSelected="@{viewModel.mDate!=null}"
+                            app:onClickCommand="@{viewModel.onSelectDataClick}"
+                            tools:text="@string/select_date" />
+
+                        <RadioButton
+                            android:id="@+id/no_date"
+                            style="@style/select_date_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_15"
+                            android:text="@string/no_date" />
+                    </RadioGroup>
+
+                    <com.jal.todo.module.addtask.SubTaskGroupView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:onTaskCheckChange="@{viewModel.onTaskCheckChange}"
+                        app:subTaskList="@{viewModel.mChildTasks}" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_45">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/dp_40"
+                            android:background="@null"
+                            android:drawableLeft="@drawable/ic_add_child_task"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:hint="@string/add_sub_task"
+                            android:text="@={viewModel.mEditSubTask}"
+                            android:textColor="@color/title_color"
+                            android:textColorHint="@color/gray"
+                            android:textSize="@dimen/t2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right|center_vertical"
+                            android:padding="@dimen/dp_5"
+                            android:text="@string/add"
+                            android:textColor="@color/main_color"
+                            android:textSize="@dimen/t4"
+                            app:isVisible="@{viewModel.mShowAddTask}"
+                            app:onClickCommand="@{viewModel.onAddSubTaskClick}" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_45"
+                        android:layout_gravity="center_vertical"
+                        android:drawableLeft="@drawable/ic_clock_3"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:gravity="center_vertical"
+                        android:hint="添加提醒"
+                        android:text="@{viewModel.mRemindTime}"
+                        android:textColor="@color/main_color"
+                        android:textColorHint="@color/gray"
+                        android:textSize="@dimen/t2"
+                        app:onClickCommand="@{viewModel.onSelectRemindTimeClick}" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_45"
+                        android:layout_gravity="center_vertical"
+                        android:drawableLeft="@drawable/ic_repeat"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:gravity="center_vertical"
+                        android:text="设置重复"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/t2" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_45"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:drawableLeft="@drawable/ic_priority"
+                            android:drawablePadding="@dimen/dp_10"
+                            android:text="优先级"
+                            android:textColor="@color/title_color"
+                            android:textSize="@dimen/t2" />
+
+                        <RadioGroup
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right|center_vertical"
+                            android:checkedButton="@id/priority_1"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/priority_1"
+                                style="@style/select_priority_text"
+                                android:layout_marginRight="@dimen/dp_1"
+                                android:background="@drawable/priority_bg_3"
+                                android:text="一般" />
+
+                            <RadioButton
+                                style="@style/select_priority_text"
+                                android:layout_marginRight="@dimen/dp_1"
+                                android:background="@drawable/priority_bg_2"
+                                android:text="重要" />
+
+                            <RadioButton
+                                style="@style/select_priority_text"
+                                android:background="@drawable/priority_bg_one"
+                                android:text="紧急" />
+
+
+                        </RadioGroup>
+
+                    </FrameLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

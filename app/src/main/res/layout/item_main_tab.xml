@@ -1,0 +1,41 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/dp_23"
+        android:layout_height="@dimen/dp_23"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_8" />
+
+    <me.majiajie.pagerbottomtabstrip.internal.BaselineLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/dp_12">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textSize="@dimen/t5"
+            tools:text="123" />
+
+    </me.majiajie.pagerbottomtabstrip.internal.BaselineLayout>
+
+    <me.majiajie.pagerbottomtabstrip.internal.RoundMessageView
+        android:id="@+id/messages"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_3"
+        android:translationX="@dimen/dp_14" />
+
+</merge>
+
+
+
+
+

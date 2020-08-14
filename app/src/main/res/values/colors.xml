@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FAFAFA</color>
+    <color name="colorPrimaryDark">#FAFAFA</color>
+    <color name="colorAccent">#22D59C</color>
+
+    <color name="main_color">#22D59C</color>
+    <color name="bg_color">#FAFAFA</color>
+    <color name="gray">#BBBBBB</color>
+    <color name="title_color">#111111</color>
+    <color name="line_color">#0a000000</color>
+    <color name="date_text_color">#AAAAAA</color>
+    <color name="date_text_selected_color">#FFFFFF</color>
+    <color name="picker_dialog_text_color">#ACACAC</color>
+    <color name="picker_dialog_text_selected_color">#111111</color>
+</resources>
