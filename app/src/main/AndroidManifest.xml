@@ -26,6 +26,8 @@
         <activity
             android:name=".module.addtask.AddTaskActivity"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".module.timer.FocusActivity" />
     </application>
 
 </manifest>

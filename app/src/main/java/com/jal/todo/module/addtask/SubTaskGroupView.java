@@ -6,12 +6,12 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
+import com.jal.core.mvvm.binding.command.BindingCommand;
 import com.jal.todo.db.entity.Task;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.ObservableList;
-import me.goldze.mvvmhabit.binding.command.BindingCommand;
 
 public class SubTaskGroupView extends LinearLayout {
     public SubTaskGroupView(Context context) {
@@ -36,9 +36,6 @@ public class SubTaskGroupView extends LinearLayout {
     private ObservableList<Task> mSubTaskList;
 
     public void setSubTaskList(ObservableList<Task> list) {
-        if (mSubTaskList == list) {
-            return;
-        }
         if (list == null) {
             return;
         }

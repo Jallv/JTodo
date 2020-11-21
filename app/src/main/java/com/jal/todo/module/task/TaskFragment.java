@@ -7,17 +7,12 @@ import android.view.ViewGroup;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
-import com.haibin.calendarview.WeekViewPager;
+import com.jal.core.mvvm.base.BaseFragment;
+import com.jal.todo.BR;
 import com.jal.todo.R;
-import com.jal.todo.databinding.FragmentRecordBinding;
 import com.jal.todo.databinding.FragmentTaskBinding;
-import com.jal.todo.module.record.RecordViewModel;
 
 import androidx.annotation.Nullable;
-import jal.dev.common.utils.DateUtil;
-import jal.dev.common.utils.ToastUtil;
-import me.goldze.mvvmhabit.BR;
-import me.goldze.mvvmhabit.base.BaseFragment;
 
 public class TaskFragment extends BaseFragment<FragmentTaskBinding, TaskViewModel> {
     @Override
@@ -50,5 +45,6 @@ public class TaskFragment extends BaseFragment<FragmentTaskBinding, TaskViewMode
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        viewModel.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -1,22 +1,18 @@
 package com.jal.todo.db;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.jal.todo.bean.RepeatTime;
-import com.jal.todo.db.entity.Task;
-
-import java.util.List;
+import com.jal.todo.bean.Repeat;
 
 import androidx.room.TypeConverter;
 
 public class RepeatConverters {
     @TypeConverter
-    public RepeatTime stringToObject(String value) {
-        return new Gson().fromJson(value, RepeatTime.class);
+    public Repeat stringToObject(String value) {
+        return new Gson().fromJson(value, Repeat.class);
     }
 
     @TypeConverter
-    public String objectToString(RepeatTime repeatTime) {
-        return new Gson().toJson(repeatTime);
+    public String objectToString(Repeat repeat) {
+        return new Gson().toJson(repeat);
     }
 }

@@ -33,7 +33,7 @@ dependencies {
 
     implementation rootProject.ext.dependencies.appcompat
 
-    api 'com.github.goldze:MVVMHabit:3.1.3'
+//    api 'com.github.goldze:MVVMHabit:3.1.3'
     //rx管理View的生命周期
     api(rootProject.ext.dependencies.rxlifecycle) {
         exclude group: 'com.android.support'
@@ -42,4 +42,12 @@ dependencies {
         exclude group: 'com.android.support'
     }
     api project(path: ':common')
+    api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    api 'androidx.recyclerview:recyclerview:1.1.0@aar'
+    api rootProject.ext.dependencies.glide
+    annotationProcessor rootProject.ext.dependencies["glide-compiler"]
+    api(rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]) {
+        exclude group: 'com.android.support'
+    }
+    api rootProject.ext.dependencies.gson
 }

@@ -130,6 +130,19 @@
         </attr>
         <attr name="calendar_content_view_id" format="integer" />
     </declare-styleable>
-
+    <declare-styleable name="CountDownView">
+        <!--圆环半径-->
+        <attr name="radius" format="dimension" />
+        <!--圆环宽度-->
+        <attr name="ring_width" format="dimension" />
+        <!--圆环颜色-->
+        <attr name="ring_color" format="color" />
+        <!--进度颜色-->
+        <attr name="progress_ring_color" format="color" />
+        <!--倒计时时间文字颜色-->
+        <attr name="text_color" format="color" />
+        <!--倒计时时间文字大小-->
+        <attr name="text_size" format="dimension" />
+    </declare-styleable>
 
 </resources>

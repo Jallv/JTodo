@@ -1,6 +1,7 @@
 package com.jal.core.viewmodel;
 
-import me.goldze.mvvmhabit.binding.command.BindingCommand;
+
+import com.jal.core.mvvm.binding.command.BindingCommand;
 
 public interface IToolbarViewModel {
     String getTitle();

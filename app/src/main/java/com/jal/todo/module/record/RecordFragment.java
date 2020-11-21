@@ -4,13 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.jal.core.mvvm.base.BaseFragment;
+import com.jal.todo.BR;
 import com.jal.todo.R;
-import com.jal.todo.databinding.FragmentMyBinding;
 import com.jal.todo.databinding.FragmentRecordBinding;
 
 import androidx.annotation.Nullable;
-import me.goldze.mvvmhabit.BR;
-import me.goldze.mvvmhabit.base.BaseFragment;
 
 public class RecordFragment extends BaseFragment<FragmentRecordBinding, RecordViewModel> {
     @Override

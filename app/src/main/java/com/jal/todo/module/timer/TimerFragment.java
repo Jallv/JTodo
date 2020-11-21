@@ -4,14 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.jal.core.mvvm.base.BaseFragment;
+import com.jal.todo.BR;
 import com.jal.todo.R;
 import com.jal.todo.databinding.FragmentTaskBinding;
 import com.jal.todo.databinding.FragmentTimerBinding;
 import com.jal.todo.module.task.TaskViewModel;
 
 import androidx.annotation.Nullable;
-import me.goldze.mvvmhabit.BR;
-import me.goldze.mvvmhabit.base.BaseFragment;
 
 public class TimerFragment extends BaseFragment<FragmentTimerBinding, TimerViewModel> {
     @Override
@@ -22,5 +22,11 @@ public class TimerFragment extends BaseFragment<FragmentTimerBinding, TimerViewM
     @Override
     public int initVariableId() {
         return BR.viewModel;
+    }
+
+    @Override
+    public void initData() {
+        super.initData();
+        binding.countDownView.setTime(5 * 60 * 1000);
     }
 }

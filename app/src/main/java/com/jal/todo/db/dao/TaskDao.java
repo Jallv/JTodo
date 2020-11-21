@@ -17,8 +17,8 @@ public interface TaskDao {
     @Query("SELECT * from task")
     Flowable<List<Task>> getAllTask();
 
-    @Query("SELECT * from task WHERE date=:date ORDER BY createTime DESC")
-    Single<List<Task>> getTaskByDate(String date);
+    @Query("SELECT * from task WHERE date=:date OR date='-1' OR (week & :week)!=0 ORDER BY createTime DESC")
+    Single<List<Task>> getTaskByDate(String date, int week);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Task... tasks);

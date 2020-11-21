@@ -3,12 +3,13 @@ package com.jal.core.binding.viewadapter.recyclerview;
 import android.graphics.Rect;
 import android.view.View;
 
+import com.jal.core.mvvm.binding.command.BindingCommand;
+
 import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import me.goldze.mvvmhabit.binding.command.BindingCommand;
 
 public class ViewAdapter {
     @BindingAdapter({"horizontalSpace"})

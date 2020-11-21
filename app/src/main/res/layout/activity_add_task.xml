@@ -139,7 +139,7 @@
                         android:drawableLeft="@drawable/ic_clock_3"
                         android:drawablePadding="@dimen/dp_10"
                         android:gravity="center_vertical"
-                        android:hint="添加提醒"
+                        android:hint="@string/add_reminder"
                         android:text="@{viewModel.mRemindTime}"
                         android:textColor="@color/main_color"
                         android:textColorHint="@color/gray"
@@ -153,9 +153,12 @@
                         android:drawableLeft="@drawable/ic_repeat"
                         android:drawablePadding="@dimen/dp_10"
                         android:gravity="center_vertical"
-                        android:text="设置重复"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/t2" />
+                        android:hint="@string/set_repetition"
+                        android:textColorHint="@color/gray"
+                        android:textColor="@color/title_color"
+                        android:text="@{viewModel.mRepeatText}"
+                        android:textSize="@dimen/t2"
+                        app:onClickCommand="@{viewModel.onSelectRepeatClick}"/>
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -168,7 +171,7 @@
                             android:layout_gravity="center_vertical"
                             android:drawableLeft="@drawable/ic_priority"
                             android:drawablePadding="@dimen/dp_10"
-                            android:text="优先级"
+                            android:text="@string/priority"
                             android:textColor="@color/title_color"
                             android:textSize="@dimen/t2" />
 
@@ -184,18 +187,18 @@
                                 style="@style/select_priority_text"
                                 android:layout_marginRight="@dimen/dp_1"
                                 android:background="@drawable/priority_bg_3"
-                                android:text="一般" />
+                                android:text="@string/commonly" />
 
                             <RadioButton
                                 style="@style/select_priority_text"
                                 android:layout_marginRight="@dimen/dp_1"
                                 android:background="@drawable/priority_bg_2"
-                                android:text="重要" />
+                                android:text="@string/important" />
 
                             <RadioButton
                                 style="@style/select_priority_text"
                                 android:background="@drawable/priority_bg_one"
-                                android:text="紧急" />
+                                android:text="@string/urgent" />
 
 
                         </RadioGroup>

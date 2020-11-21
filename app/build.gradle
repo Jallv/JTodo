@@ -41,5 +41,5 @@ dependencies {
     implementation rootProject.ext.dependencies.appcompat
     implementation project(path: ':core')
     implementation project(path: ':calendarview')
-    compile project(path: ':pickerview')
+    implementation project(path: ':pickerview')
 }

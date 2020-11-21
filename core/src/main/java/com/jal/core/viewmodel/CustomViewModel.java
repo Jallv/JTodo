@@ -2,12 +2,13 @@ package com.jal.core.viewmodel;
 
 import android.app.Application;
 
+import com.jal.core.mvvm.base.BaseModel;
+import com.jal.core.mvvm.base.BaseViewModel;
+import com.jal.core.mvvm.binding.command.BindingAction;
+import com.jal.core.mvvm.binding.command.BindingCommand;
+import com.jal.core.mvvm.event.SingleLiveEvent;
+
 import androidx.annotation.NonNull;
-import me.goldze.mvvmhabit.base.BaseModel;
-import me.goldze.mvvmhabit.base.BaseViewModel;
-import me.goldze.mvvmhabit.binding.command.BindingAction;
-import me.goldze.mvvmhabit.binding.command.BindingCommand;
-import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 
 public class CustomViewModel<M extends BaseModel> extends BaseViewModel<M> implements IToolbarViewModel {
     private CustomUIChangeLiveData customUI;

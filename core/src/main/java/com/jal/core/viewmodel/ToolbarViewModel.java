@@ -1,8 +1,9 @@
 package com.jal.core.viewmodel;
 
+import com.jal.core.mvvm.binding.command.BindingCommand;
+
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.ViewModel;
-import me.goldze.mvvmhabit.binding.command.BindingCommand;
 
 public class ToolbarViewModel extends ViewModel {
     private IToolbarViewModel iToolbarViewModel;

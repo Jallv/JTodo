@@ -3,8 +3,9 @@ package com.jal.core.binding.viewadapter.radiogroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.jal.core.mvvm.binding.command.BindingCommand;
+
 import androidx.databinding.BindingAdapter;
-import me.goldze.mvvmhabit.binding.command.BindingCommand;
 
 public class ViewAdapter {
     @BindingAdapter(value = "onCheckedChangeCommand")

@@ -4,14 +4,15 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.text.TextUtils;
 
+import com.jal.core.mvvm.binding.command.BindingAction;
+import com.jal.core.mvvm.binding.command.BindingCommand;
+import com.jal.core.mvvm.binding.command.BindingConsumer;
+import com.jal.core.mvvm.event.SingleLiveEvent;
 import com.jal.core.viewmodel.CustomViewModel;
 import com.jal.todo.R;
-import com.jal.todo.bean.RepeatTime;
+import com.jal.todo.bean.Repeat;
 import com.jal.todo.db.AppDatabase;
 import com.jal.todo.db.entity.Task;
-import com.jal.todo.widget.PickerDialog;
-
-import org.jaaksi.pickerview.picker.TimePicker;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,10 +30,6 @@ import jal.dev.common.utils.ResourcesUtil;
 import jal.dev.common.utils.ToastUtil;
 import jal.dev.common.utils.rxjava.CommonRxTask;
 import jal.dev.common.utils.rxjava.RxAdapter;
-import me.goldze.mvvmhabit.binding.command.BindingAction;
-import me.goldze.mvvmhabit.binding.command.BindingCommand;
-import me.goldze.mvvmhabit.binding.command.BindingConsumer;
-import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 
 public class AddTaskViewModel extends CustomViewModel {
     public ObservableField<String> mTaskContent = new ObservableField<>();
@@ -42,12 +39,17 @@ public class AddTaskViewModel extends CustomViewModel {
     public ObservableList<Task> mChildTasks = new ObservableArrayList<>();
     public ObservableBoolean mShowAddTask = new ObservableBoolean(false);
     public ObservableField<String> mRemindTime = new ObservableField<>();
-    public ObservableField<RepeatTime> mRepeatTime = new ObservableField<>();
+    public ObservableField<Repeat> mRepeat = new ObservableField<>();
+    public ObservableField<String> mRepeatText = new ObservableField<>();
     public ObservableInt mPriority = new ObservableInt();
     public SingleLiveEvent<Calendar> showDatePicker = new SingleLiveEvent<>();
     public SingleLiveEvent<Void> showSelectRemindTimePicker = new SingleLiveEvent<>();
+    public SingleLiveEvent<Repeat> showSelectRepeatPicker = new SingleLiveEvent<>();
+    public SingleLiveEvent<Task> backWithTask = new SingleLiveEvent<>();
     private String mFullDate;
     private Calendar mCalendar = Calendar.getInstance();
+    private Task mCurrentTask;
+
     private Observable.OnPropertyChangedCallback changedCallback = new Observable.OnPropertyChangedCallback() {
         @Override
         public void onPropertyChanged(Observable sender, int propertyId) {
@@ -61,7 +63,10 @@ public class AddTaskViewModel extends CustomViewModel {
     }
 
     public void setTask(Task task) {
+        mCurrentTask = task;
         mTaskContent.set(task.content);
+        mRepeat.set(new Repeat(task));
+        mRepeatText.set(mRepeat.get().getRepeat() == 0 ? "" : ResourcesUtil.getString(R.string.repeat_event));
         if (task.subTaskList != null && task.subTaskList.size() > 0) {
             mChildTasks.addAll(task.subTaskList);
         }
@@ -72,7 +77,7 @@ public class AddTaskViewModel extends CustomViewModel {
             calendar.setTime(DateUtil.parseTime(task.date, DateUtil.FormatType.yyyyMMdd));
             selectDate(calendar);
         }
-        if(!TextUtils.isEmpty(task.remindTime)){
+        if (!TextUtils.isEmpty(task.remindTime)) {
             mRemindTime.set(task.remindTime);
         }
     }
@@ -104,6 +109,12 @@ public class AddTaskViewModel extends CustomViewModel {
         @Override
         public void call() {
             showSelectRemindTimePicker.call();
+        }
+    });
+    public BindingCommand onSelectRepeatClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            showSelectRepeatPicker.setValue(mRepeat.get());
         }
     });
     public BindingCommand onAddSubTaskClick = new BindingCommand(new BindingAction() {
@@ -141,10 +152,19 @@ public class AddTaskViewModel extends CustomViewModel {
             ToastUtil.showToast("请输入任务内容");
             return;
         }
-        Task task = new Task();
+        Task task;
+        if (mCurrentTask != null) {
+            task = mCurrentTask;
+        } else {
+            task = new Task();
+            task.createTime = System.currentTimeMillis();
+        }
         task.content = mTaskContent.get();
         task.date = DateUtil.formatDate(mCalendar.getTime(), DateUtil.FormatType.yyyyMMdd);
-        task.remindTime=mRemindTime.get();
+        task.remindTime = mRemindTime.get();
+        if (mRepeat.get() != null) {
+            mRepeat.get().addRepeat(task);
+        }
         String lastTask = mEditSubTask.get();
         if (mChildTasks.size() > 0 || !TextUtils.isEmpty(lastTask)) {
             task.subTaskList = new ArrayList<>();
@@ -160,13 +180,11 @@ public class AddTaskViewModel extends CustomViewModel {
             @Override
             public void doInIOThread() {
                 AppDatabase.getInstance(getApplication()).taskDao().insert(t);
-                super.doInIOThread();
             }
 
             @Override
             public void doInUIThread() {
-                finish();
-                super.doInUIThread();
+                backWithTask.setValue(t);
             }
         }, RxAdapter.<CommonRxTask<Task>>bindUntilEvent(getLifecycleProvider()));
     }
@@ -192,9 +210,16 @@ public class AddTaskViewModel extends CustomViewModel {
             selectTime(-1);
         }
     }
-    public void selectRemindTime(Date date){
-        mRemindTime.set(DateUtil.formatDate(date,DateUtil.FormatType.HHmm).replace("-","."));
+
+    public void selectRemindTime(Date date) {
+        mRemindTime.set(DateUtil.formatDate(date, DateUtil.FormatType.HHmm).replace("-", "."));
     }
+
+    public void setRepeat(Repeat repeat) {
+        mRepeat.set(repeat);
+        mRepeatText.set(repeat == null ? "" : ResourcesUtil.getString(R.string.repeat_event));
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();

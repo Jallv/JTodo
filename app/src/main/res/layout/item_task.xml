@@ -42,19 +42,38 @@
             app:deleteLine="@{viewModel.deleteLine}"
             tools:text="任务一" />
 
-        <TextView
-            android:id="@+id/remind_time"
+        <LinearLayout
+            android:id="@+id/task_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/title_text"
             android:layout_alignLeft="@id/title_text"
             android:layout_marginTop="@dimen/dp_2"
-            android:drawableLeft="@drawable/ic_clock_1"
-            android:drawablePadding="@dimen/dp_5"
-            android:text="@{viewModel.taskObservable.remindTime}"
-            android:textColor="@color/main_color"
-            android:textSize="@dimen/sp_8"
-            app:isVisible="@{viewModel.taskObservable.remindTime!=null}" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/remind_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp_10"
+                android:drawableLeft="@drawable/ic_clock_1"
+                android:drawablePadding="@dimen/dp_5"
+                android:text="@{viewModel.taskObservable.remindTime}"
+                android:textColor="@color/main_color"
+                android:textSize="@dimen/sp_8"
+                app:isVisible="@{viewModel.taskObservable.remindTime!=null}"
+                tools:text="8:00" />
+
+            <TextView
+                android:id="@+id/repeat_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/repeat_event"
+                android:textColor="@color/main_color"
+                android:textSize="@dimen/sp_8"
+                app:isVisible="@{viewModel.repeatObservable.repeat!=0}" />
+        </LinearLayout>
+
 
         <ImageButton
             android:layout_width="@dimen/dp_20"
@@ -68,7 +87,7 @@
         <com.jal.todo.module.addtask.SubTaskGroupView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/remind_time"
+            android:layout_below="@id/task_hint"
             android:layout_marginStart="@dimen/dp_28"
             android:layout_marginLeft="@dimen/dp_28"
             android:layout_marginTop="@dimen/dp_5"

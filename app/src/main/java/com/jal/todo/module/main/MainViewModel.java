@@ -2,10 +2,9 @@ package com.jal.todo.module.main;
 
 import android.app.Application;
 
-import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.jal.core.mvvm.base.BaseViewModel;
 
 import androidx.annotation.NonNull;
-import me.goldze.mvvmhabit.base.BaseViewModel;
 
 public class MainViewModel extends BaseViewModel {
     public MainViewModel(@NonNull Application application) {

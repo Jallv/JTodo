@@ -16,4 +16,18 @@
     <string name="add_sub_task">添加子任务</string>
     <string name="add">添加</string>
     <string name="prepare_input">准备做什么？</string>
+    <string name="every_day">每天</string>
+    <string name="every_week">每周</string>
+    <string name="add_reminder">添加提醒</string>
+    <string name="set_repetition">设置重复</string>
+    <string name="priority">优先级</string>
+    <string name="commonly">一般</string>
+    <string name="important">重要</string>
+    <string name="urgent">紧急</string>
+    <string name="repeat_event">重复事件</string>
+    <string name="next_task">下一个任务</string>
+    <string name="next_task_en">NEXT TASK</string>
+    <string name="understand_focus"><u>了解番茄工作法</u></string>
+    <string name="start_focus">开始专注</string>
+    <string name="give_up_focus">放弃专注</string>
 </resources>

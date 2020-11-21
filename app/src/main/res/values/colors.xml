@@ -7,10 +7,14 @@
     <color name="main_color">#22D59C</color>
     <color name="bg_color">#FAFAFA</color>
     <color name="gray">#BBBBBB</color>
+    <color name="gray_20">#EEEEEE</color>
     <color name="title_color">#111111</color>
+    <color name="subtitle_color">#757883</color>
+    <color name="describe_color">#E0E0E0</color>
     <color name="line_color">#0a000000</color>
     <color name="date_text_color">#AAAAAA</color>
     <color name="date_text_selected_color">#FFFFFF</color>
     <color name="picker_dialog_text_color">#ACACAC</color>
     <color name="picker_dialog_text_selected_color">#111111</color>
+    <color name="countdown_text_color">#020D41</color>
 </resources>

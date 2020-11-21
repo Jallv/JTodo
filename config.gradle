@@ -48,7 +48,8 @@ ext {
             "arouter-compiler"             : "com.alibaba:arouter-compiler:1.2.2",
 
             //recycelervie
-            "BaseRecyclerViewAdapterHelper": 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47'
+            "BaseRecyclerViewAdapterHelper": 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47',
+            "bindingcollectionadapter-recyclerview": "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.2.0"
     ]
 
 }

@@ -4,7 +4,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import jal.dev.common.utils.ScreenUtils;
-import me.goldze.mvvmhabit.base.BaseActivity;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.internal.Utils;
 import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
@@ -18,6 +17,7 @@ import android.util.Log;
 import android.view.ViewGroup;
 
 import com.jaeger.library.StatusBarUtil;
+import com.jal.core.mvvm.base.BaseActivity;
 import com.jal.todo.BR;
 import com.jal.todo.R;
 import com.jal.todo.TodoApplication;
@@ -26,6 +26,7 @@ import com.jal.todo.module.my.MyFragment;
 import com.jal.todo.module.record.RecordFragment;
 import com.jal.todo.module.task.TaskFragment;
 import com.jal.todo.module.timer.TimerFragment;
+import com.jal.todo.widget.IconItemView;
 import com.jal.todo.widget.MainItemView;
 
 import java.util.ArrayList;
@@ -57,9 +58,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     public void initData() {
         super.initData();
-        Log.i("classLoader",""+this.getClass().getClassLoader());
-        Log.i("classLoader",""+this.getClass().getClassLoader().getParent());
-        Log.i("classLoader",""+ TodoApplication.getApplication().getClassLoader());
         StatusBarUtil.setLightMode(this);
         ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) binding.getRoot().getLayoutParams();
         params.topMargin += ScreenUtils.getStatusHeight(this);

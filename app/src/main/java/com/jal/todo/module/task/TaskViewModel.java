@@ -1,18 +1,26 @@
 package com.jal.todo.module.task;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
 
 import com.haibin.calendarview.Calendar;
+import com.jal.core.mvvm.binding.command.BindingAction;
+import com.jal.core.mvvm.binding.command.BindingCommand;
 import com.jal.core.viewmodel.CustomViewModel;
+import com.jal.todo.BR;
 import com.jal.todo.R;
 import com.jal.todo.db.AppDatabase;
 import com.jal.todo.db.entity.Task;
 import com.jal.todo.module.addtask.AddTaskActivity;
 
+import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableList;
@@ -21,11 +29,11 @@ import jal.dev.common.utils.DateUtil;
 import jal.dev.common.utils.ResourcesUtil;
 import jal.dev.common.utils.rxjava.CommonRxTask;
 import jal.dev.common.utils.rxjava.RxAdapter;
-import me.goldze.mvvmhabit.binding.command.BindingAction;
-import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 public class TaskViewModel extends CustomViewModel {
+    private final static int ADD_REQUEST_CODE = 1001;
+    public final static String ADD_TASK = "Task";
     public ObservableBoolean showEmpty = new ObservableBoolean(false);
 
     public TaskViewModel(@NonNull Application application) {
@@ -33,11 +41,11 @@ public class TaskViewModel extends CustomViewModel {
     }
 
     public ObservableList<TaskItemViewModel> observableList = new ObservableArrayList<>();
-    public ItemBinding<TaskItemViewModel> itemBinding = ItemBinding.of(com.jal.todo.BR.viewModel, R.layout.item_task);
+    public ItemBinding<TaskItemViewModel> itemBinding = ItemBinding.of(BR.viewModel, R.layout.item_task);
     public BindingCommand addTaskCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            startActivity(AddTaskActivity.class, AddTaskActivity.getAddTaskBundle(currentCalendar));
+            startActivity(AddTaskActivity.class, AddTaskActivity.getAddTaskBundle(currentCalendar), ADD_REQUEST_CODE);
         }
     });
 
@@ -50,22 +58,18 @@ public class TaskViewModel extends CustomViewModel {
 
     public void loadTask() {
         currentCalendar = java.util.Calendar.getInstance();
-        loadTask(DateUtil.formatDate(currentCalendar.getTime(), DateUtil.FormatType.yyyyMMdd));
+        loadTask(DateUtil.formatDate(currentCalendar.getTime(), DateUtil.FormatType.yyyyMMdd), currentCalendar.get(java.util.Calendar.DAY_OF_WEEK));
     }
 
     public void loadTask(Calendar calendar) {
         currentCalendar = java.util.Calendar.getInstance();
         currentCalendar.set(calendar.getYear(), calendar.getMonth() - 1, calendar.getDay());
-        loadTask(DateUtil.formatLong(calendar.getTimeInMillis(), DateUtil.FormatType.yyyyMMdd));
-    }
-
-    public void onTaskResult(Task task) {
-
+        loadTask(DateUtil.formatLong(calendar.getTimeInMillis(), DateUtil.FormatType.yyyyMMdd),currentCalendar.get(java.util.Calendar.DAY_OF_WEEK));
     }
 
     @SuppressLint("CheckResult")
-    private void loadTask(String date) {
-        AppDatabase.getInstance(getApplication()).taskDao().getTaskByDate(date)
+    private void loadTask(String date, int week) {
+        AppDatabase.getInstance(getApplication()).taskDao().getTaskByDate(date, week)
                 .compose(RxAdapter.<List<Task>>bindUntilFragmentEvent(getLifecycleProvider()))
                 .compose(RxAdapter.<List<Task>>schedulersSingleTransformer())
                 .subscribe(new Consumer<List<Task>>() {
@@ -97,11 +101,16 @@ public class TaskViewModel extends CustomViewModel {
             public void doInIOThread() {
                 AppDatabase.getInstance(getApplication()).taskDao().delete(t);
             }
+
+            @Override
+            public void doInUIThread() {
+                removeTask(t);
+            }
         }, RxAdapter.<CommonRxTask<Task>>bindUntilFragmentEvent(getLifecycleProvider()));
     }
 
     public void onItemClick(Task task) {
-        startActivity(AddTaskActivity.class, AddTaskActivity.getAddTaskBundle(task));
+        startActivity(AddTaskActivity.class, AddTaskActivity.getAddTaskBundle(task), ADD_REQUEST_CODE);
     }
 
     public void saveTask(final Task task) {
@@ -122,6 +131,48 @@ public class TaskViewModel extends CustomViewModel {
                 }
             }
             saveTask(task);
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == ADD_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            if (data == null) {
+                return;
+            }
+            Serializable serializable = data.getSerializableExtra(ADD_TASK);
+            if (serializable == null) {
+                return;
+            }
+            Task task = (Task) serializable;
+            if (!task.date.equals(DateUtil.formatDate(currentCalendar.getTime(), DateUtil.FormatType.yyyyMMdd))) {
+                return;
+            }
+            addTask(task);
+            showEmpty.set(false);
+        }
+    }
+
+    private void addTask(Task task) {
+        for (TaskItemViewModel itemViewModel : observableList) {
+            if (task.equals(itemViewModel.taskObservable.get())) {
+                itemViewModel.setTask(task);
+                return;
+            }
+        }
+        observableList.add(0, new TaskItemViewModel(this, task));
+    }
+
+    private void removeTask(Task task) {
+        Iterator<TaskItemViewModel> iterator = observableList.iterator();
+        while (iterator.hasNext()) {
+            TaskItemViewModel itemViewModel = iterator.next();
+            if (task.equals(itemViewModel.taskObservable.get())) {
+                iterator.remove();
+                break;
+            }
+        }
+        if(observableList.size()==0){
+            showEmpty.set(true);
         }
     }
 }
