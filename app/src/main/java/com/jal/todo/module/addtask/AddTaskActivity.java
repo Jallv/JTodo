@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
+import com.google.android.material.color.MaterialColors;
+import com.google.android.material.transition.platform.MaterialContainerTransform;
+import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback;
 import com.jaeger.library.StatusBarUtil;
 import com.jal.core.mvvm.base.BaseActivity;
 import com.jal.todo.BR;
@@ -29,7 +32,6 @@ import jal.dev.common.utils.ScreenUtils;
 public class AddTaskActivity extends BaseActivity<ActivityAddTaskBinding, AddTaskViewModel> {
     public static final String CALENDAR = "calendar";
     public static final String TASK = "task";
-
     public static Bundle getAddTaskBundle(Calendar calendar) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(CALENDAR, calendar);
@@ -42,6 +44,26 @@ public class AddTaskActivity extends BaseActivity<ActivityAddTaskBinding, AddTas
         return bundle;
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        // Set up shared element transition
+        findViewById(android.R.id.content).setTransitionName("item_task");
+        setEnterSharedElementCallback(new MaterialContainerTransformSharedElementCallback());
+        getWindow().setSharedElementEnterTransition(buildContainerTransform(true));
+        getWindow().setSharedElementReturnTransition(buildContainerTransform(false));
+        super.onCreate(savedInstanceState);
+    }
+    private MaterialContainerTransform buildContainerTransform(boolean entering) {
+        MaterialContainerTransform transform = new MaterialContainerTransform();
+        // Use all 3 container layer colors since this transform can be configured using any fade mode
+        // and some of the start views don't have a background and the end view doesn't have a
+        // background.
+        transform.setAllContainerColors(
+                MaterialColors.getColor(findViewById(android.R.id.content), R.attr.colorSurface));
+        transform.addTarget(android.R.id.content);
+//        configurationHelper.configure(transform, entering);
+        return transform;
+    }
     @Override
     public int initContentView(Bundle savedInstanceState) {
         return R.layout.activity_add_task;

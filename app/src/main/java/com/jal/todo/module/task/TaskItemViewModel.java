@@ -1,5 +1,7 @@
 package com.jal.todo.module.task;
 
+import android.view.View;
+
 import com.jal.core.mvvm.base.ItemViewModel;
 import com.jal.core.mvvm.binding.command.BindingAction;
 import com.jal.core.mvvm.binding.command.BindingCommand;
@@ -69,10 +71,10 @@ public class TaskItemViewModel extends ItemViewModel<TaskViewModel> {
             deleteLine.set(task.isCompleted);
         }
     });
-    public BindingCommand itemClickCommand = new BindingCommand(new BindingAction() {
+    public BindingCommand<View> itemClickCommand = new BindingCommand<>(new BindingConsumer<View>() {
         @Override
-        public void call() {
-            viewModel.onItemClick(taskObservable.get());
+        public void call(View view) {
+            viewModel.onItemClick(taskObservable.get(), view);
         }
     });
 

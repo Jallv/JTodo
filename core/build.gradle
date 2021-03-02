@@ -50,4 +50,5 @@ dependencies {
         exclude group: 'com.android.support'
     }
     api rootProject.ext.dependencies.gson
+    api 'com.google.android.material:material:1.2.1'
 }

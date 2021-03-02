@@ -7,6 +7,10 @@
         <variable
             name="viewModel"
             type="com.jal.todo.module.task.TaskViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.jal.todo.module.task.TaskRecyclerViewAdapter" />
     </data>
 
     <LinearLayout
@@ -16,7 +20,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height"
+            android:layout_height="@dimen/dp_45"
             android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -31,57 +35,52 @@
                 android:layout_weight="1" />
 
             <ImageButton
-                android:layout_width="@dimen/dp_32"
-                android:layout_height="@dimen/dp_32"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="@dimen/dp_45"
+                android:layout_height="@dimen/dp_45"
                 android:layout_gravity="center_vertical"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/dp_5"
+                android:padding="@dimen/dp_12"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_task_box" />
 
             <ImageButton
-                android:layout_width="@dimen/dp_32"
-                android:layout_height="@dimen/dp_32"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="@dimen/dp_45"
+                android:layout_height="@dimen/dp_45"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/dp_5"
+                android:padding="@dimen/dp_12"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_calendar" />
+                android:src="@drawable/ic_calendar"
+                android:layout_marginLeft="@dimen/dp_m_8"/>
 
             <ImageButton
-                android:layout_width="@dimen/dp_32"
-                android:layout_height="@dimen/dp_32"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="@dimen/dp_45"
+                android:layout_height="@dimen/dp_45"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/dp_5"
+                android:padding="@dimen/dp_12"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_time_axis" />
+                android:src="@drawable/ic_time_axis"
+                android:layout_marginLeft="@dimen/dp_m_8"/>
 
             <ImageButton
-                android:layout_width="@dimen/dp_32"
-                android:layout_height="@dimen/dp_32"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="@dimen/dp_45"
+                android:layout_height="@dimen/dp_45"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/dp_5"
                 android:layout_marginRight="@dimen/dp_10"
-                android:background="?android:attr/selectableItemBackground"
-                android:padding="@dimen/dp_5"
+                android:padding="@dimen/dp_12"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_more" />
+                android:src="@drawable/ic_more"
+                android:layout_marginLeft="@dimen/dp_m_8"/>
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
-            android:background="@color/line_color" />
 
         <com.haibin.calendarview.CalendarLayout
             android:id="@+id/calendarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_5"
-            android:layout_marginBottom="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_15"
             android:orientation="vertical"
             app:calendar_show_mode="only_week_view"
             app:default_status="shrink">
@@ -121,11 +120,6 @@
                 app:year_view_scheme_color="#f17706" />
         </com.haibin.calendarview.CalendarLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
-            android:background="@color/line_color" />
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -134,9 +128,7 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
                 android:clipToPadding="false"
                 android:paddingBottom="@dimen/dp_15"
                 app:adapter="@{adapter}"
@@ -144,6 +136,7 @@
                 app:items="@{viewModel.observableList}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:verticalSpace="@{@dimen/dp_5}" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -167,6 +160,7 @@
                     android:textColor="@color/gray"
                     android:textSize="@dimen/t5" />
             </LinearLayout>
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

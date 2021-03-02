@@ -1,2 +1,2 @@
-include ':app', ':common', ':core', ':calendarview', ':pickerview'
+include ':app', ':common', ':core', ':calendarview'
 rootProject.name='J-Todo'

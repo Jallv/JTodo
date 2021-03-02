@@ -33,7 +33,6 @@ dependencies {
     //状态栏工具
     implementation 'com.jaeger.statusbarutil:library:1.5.1'
     //room
-    //room
     implementation "android.arch.persistence.room:runtime:1.1.1"
     implementation "android.arch.persistence.room:rxjava2:1.1.1"
     annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
@@ -41,5 +40,4 @@ dependencies {
     implementation rootProject.ext.dependencies.appcompat
     implementation project(path: ':core')
     implementation project(path: ':calendarview')
-    implementation project(path: ':pickerview')
 }

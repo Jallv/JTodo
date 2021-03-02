@@ -1,9 +1,11 @@
 package com.jal.core.mvvm.base;
 
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Messenger;
+import android.view.View;
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
@@ -122,11 +124,14 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
                 Class<?> clz = (Class<?>) params.get(BaseViewModel.ParameterField.CLASS);
                 Bundle bundle = (Bundle) params.get(BaseViewModel.ParameterField.BUNDLE);
                 Object obj = params.get(BaseViewModel.ParameterField.REQUEST_CODE);
-                if (obj != null) {
-                    startActivity(clz, bundle, (Integer) obj);
-                } else {
-                    startActivity(clz, bundle);
+                ActivityOptions options;
+                View shareElement = (View) params.get(BaseViewModel.ParameterField.SHARE_ELEMENT);
+                if (shareElement != null) {
+                    options = ActivityOptions.makeSceneTransitionAnimation(
+                            BaseActivity.this, shareElement, getResources().getResourceName(shareElement.getId()));
+                    bundle.putAll(options.toBundle());
                 }
+                startActivity(clz, bundle, obj != null ? (Integer) obj : -1);
             }
         });
         //关闭界面

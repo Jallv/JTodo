@@ -1,5 +1,6 @@
 package com.jal.core.mvvm.base;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -125,11 +126,15 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
                 Class<?> clz = (Class<?>) params.get(BaseViewModel.ParameterField.CLASS);
                 Bundle bundle = (Bundle) params.get(BaseViewModel.ParameterField.BUNDLE);
                 Object obj = params.get(BaseViewModel.ParameterField.REQUEST_CODE);
-                if (obj != null) {
-                    startActivity(clz, bundle, (Integer) obj);
-                } else {
-                    startActivity(clz, bundle);
+                ActivityOptions options;
+                View shareElement = (View) params.get(BaseViewModel.ParameterField.SHARE_ELEMENT);
+                if (shareElement != null) {
+                    String name = getResources().getResourceName(shareElement.getId());
+                    options = ActivityOptions.makeSceneTransitionAnimation(
+                            getActivity(), shareElement, name.substring(name.lastIndexOf("/")+1));
+                    bundle.putAll(options.toBundle());
                 }
+                startActivity(clz, bundle, obj != null ? (Integer) obj : -1);
             }
         });
         //关闭界面

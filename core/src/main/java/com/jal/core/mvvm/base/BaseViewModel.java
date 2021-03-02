@@ -2,6 +2,7 @@ package com.jal.core.mvvm.base;
 
 import android.app.Application;
 import android.os.Bundle;
+import android.view.View;
 
 import com.jal.core.mvvm.event.SingleLiveEvent;
 import com.trello.rxlifecycle2.LifecycleProvider;
@@ -109,6 +110,19 @@ public class BaseViewModel<M extends BaseModel> extends AndroidViewModel impleme
         params.put(ParameterField.REQUEST_CODE, requestCode);
         if (bundle != null) {
             params.put(ParameterField.BUNDLE, bundle);
+        }
+        uc.startActivityEvent.postValue(params);
+    }
+
+    public void startActivity(Class<?> clz, View shareElement, Bundle bundle, int requestCode) {
+        Map<String, Object> params = new HashMap<>();
+        params.put(ParameterField.CLASS, clz);
+        params.put(ParameterField.REQUEST_CODE, requestCode);
+        if (bundle != null) {
+            params.put(ParameterField.BUNDLE, bundle);
+        }
+        if (shareElement != null) {
+            params.put(ParameterField.SHARE_ELEMENT, shareElement);
         }
         uc.startActivityEvent.postValue(params);
     }
@@ -226,5 +240,6 @@ public class BaseViewModel<M extends BaseModel> extends AndroidViewModel impleme
         public static String CANONICAL_NAME = "CANONICAL_NAME";
         public static String BUNDLE = "BUNDLE";
         public static String REQUEST_CODE = "REQUEST_CODE";
+        public static String SHARE_ELEMENT = "SHARE_ELEMENT";
     }
 }

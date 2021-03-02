@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
+import android.view.View;
 
 import com.haibin.calendarview.Calendar;
 import com.jal.core.mvvm.binding.command.BindingAction;
@@ -64,7 +65,7 @@ public class TaskViewModel extends CustomViewModel {
     public void loadTask(Calendar calendar) {
         currentCalendar = java.util.Calendar.getInstance();
         currentCalendar.set(calendar.getYear(), calendar.getMonth() - 1, calendar.getDay());
-        loadTask(DateUtil.formatLong(calendar.getTimeInMillis(), DateUtil.FormatType.yyyyMMdd),currentCalendar.get(java.util.Calendar.DAY_OF_WEEK));
+        loadTask(DateUtil.formatLong(calendar.getTimeInMillis(), DateUtil.FormatType.yyyyMMdd), currentCalendar.get(java.util.Calendar.DAY_OF_WEEK));
     }
 
     @SuppressLint("CheckResult")
@@ -109,8 +110,8 @@ public class TaskViewModel extends CustomViewModel {
         }, RxAdapter.<CommonRxTask<Task>>bindUntilFragmentEvent(getLifecycleProvider()));
     }
 
-    public void onItemClick(Task task) {
-        startActivity(AddTaskActivity.class, AddTaskActivity.getAddTaskBundle(task), ADD_REQUEST_CODE);
+    public void onItemClick(Task task, View view) {
+        startActivity(AddTaskActivity.class, view, AddTaskActivity.getAddTaskBundle(task), ADD_REQUEST_CODE);
     }
 
     public void saveTask(final Task task) {
@@ -171,7 +172,7 @@ public class TaskViewModel extends CustomViewModel {
                 break;
             }
         }
-        if(observableList.size()==0){
+        if (observableList.size() == 0) {
             showEmpty.set(true);
         }
     }
